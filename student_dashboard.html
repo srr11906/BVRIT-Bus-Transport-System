@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard - BVRIT{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">Student Dashboard</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Personal Information</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless">
+                    <tr>
+                        <th>Name:</th>
+                        <td>{{ student.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Roll Number:</th>
+                        <td>{{ student.roll_number }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% if student.bus_id %}
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Assigned Bus</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless">
+                    <tr>
+                        <th>Bus Number:</th>
+                        <td><span class="badge bg-success fs-5">{{ student.bus_number }}</span></td>
+                    </tr>
+                    <tr>
+                        <th>Capacity:</th>
+                        <td>{{ student.capacity }} seats</td>
+                    </tr>
+                    <tr>
+                        <th>Driver:</th>
+                        <td>{{ student.driver_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Contact:</th>
+                        <td>{{ student.driver_contact }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Route Information</h5>
+            </div>
+            <div class="card-body">
+                <h5>{{ student.route_name }}</h5>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Route Stops:</h6>
+                        <p class="text-muted">{{ student.stops }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Timings:</h6>
+                        <p class="text-muted">{{ student.timings }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-md-6 mb-4">
+        <div class="card border-warning">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0">Bus Assignment</h5>
+            </div>
+            <div class="card-body text-center">
+                <p class="lead">No bus assigned yet.</p>
+                <p class="text-muted">Please contact the administrator to assign a bus.</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

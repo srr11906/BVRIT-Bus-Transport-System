@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - BVRIT{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">Admin Dashboard</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Students</h5>
+                <h2 class="display-4">{{ students_count }}</h2>
+                <a href="{{ url_for('manage_students') }}" class="btn btn-light btn-sm mt-2">Manage</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Buses</h5>
+                <h2 class="display-4">{{ buses_count }}</h2>
+                <a href="{{ url_for('manage_buses') }}" class="btn btn-light btn-sm mt-2">Manage</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Drivers</h5>
+                <h2 class="display-4">{{ drivers_count }}</h2>
+                <a href="{{ url_for('manage_drivers') }}" class="btn btn-light btn-sm mt-2">Manage</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">Routes</h5>
+                <h2 class="display-4">{{ routes_count }}</h2>
+                <a href="{{ url_for('manage_routes') }}" class="btn btn-light btn-sm mt-2">Manage</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">Quick Links</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="{{ url_for('manage_students') }}" class="list-group-item list-group-item-action">
+                        Manage Students - Add, Edit, Delete & Assign Buses
+                    </a>
+                    <a href="{{ url_for('manage_buses') }}" class="list-group-item list-group-item-action">
+                        Manage Buses - Add, Edit, Delete & Assign Routes/Drivers
+                    </a>
+                    <a href="{{ url_for('manage_routes') }}" class="list-group-item list-group-item-action">
+                        Manage Routes - Add, Edit, Delete Route Information
+                    </a>
+                    <a href="{{ url_for('manage_drivers') }}" class="list-group-item list-group-item-action">
+                        Manage Drivers - Add, Edit, Delete Driver Information
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Routes - BVRIT{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">Manage Routes</h2>
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addRouteModal">
+            Add New Route
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Route Name</th>
+                                <th>Stops</th>
+                                <th>Timings</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for route in routes %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td><strong>{{ route.route_name }}</strong></td>
+                                <td>{{ route.stops }}</td>
+                                <td>{{ route.timings }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" 
+                                            data-bs-target="#editRouteModal{{ route.id }}">Edit</button>
+                                    <form method="POST" action="{{ url_for('delete_route', id=route.id) }}" style="display:inline;">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Are you sure you want to delete this route?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <div class="modal fade" id="editRouteModal{{ route.id }}" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Edit Route</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <form method="POST" action="{{ url_for('edit_route', id=route.id) }}">
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Route Name</label>
+                                                    <input type="text" class="form-control" name="route_name" value="{{ route.route_name }}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Stops (use → for arrows)</label>
+                                                    <input type="text" class="form-control" name="stops" value="{{ route.stops }}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Timings</label>
+                                                    <input type="text" class="form-control" name="timings" value="{{ route.timings }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addRouteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Route</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST" action="{{ url_for('add_route') }}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Route Name</label>
+                        <input type="text" class="form-control" name="route_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Stops (use → for arrows)</label>
+                        <input type="text" class="form-control" name="stops" placeholder="Location1 → Location2 → Location3" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Timings</label>
+                        <input type="text" class="form-control" name="timings" placeholder="7:00 AM - 8:30 AM" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Route</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
